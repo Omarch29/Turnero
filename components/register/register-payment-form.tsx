@@ -4,9 +4,15 @@ import Image from "next/image";
 import { Col, Row, Input, Divider } from "antd";
 import { UserOutlined } from '@ant-design/icons';
 import CreditCardComponent from "../credit-card/credit-card-component";
+import { useEffect } from "react";
 
 
-export default function RegisterPaymentForm() {
+export default function RegisterPaymentForm({setIsNextAvailable}) {
+
+    useEffect(() => {
+        setIsNextAvailable(true);
+    }, []);
+
     return (
         <Row>
             <Col span={6}><Image src={payment} style={{maxWidth: '400px', height: 'auto'}} alt="add email"/></Col>

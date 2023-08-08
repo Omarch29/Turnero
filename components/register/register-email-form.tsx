@@ -3,21 +3,26 @@ import undraw_summer_1wi4 from "../../public/undraw_summer_1wi4.svg";
 import Image from "next/image";
 import { Col, Row, Input, Divider } from "antd";
 import { UserOutlined } from '@ant-design/icons';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { type } from "os";
+import { ClientToRegister } from "@/models/client";
 
 type RegisterEmailFormProps = {
     setIsNextAvailable: (isNextAvailable: boolean) => void;
+    setClientInfo: (clientInfo: any) => void;
 };
 
-export default function RegisterEmailForm({setIsNextAvailable}): React.FC<RegisterEmailFormProps> {
+export default function RegisterEmailForm({setIsNextAvailable, setClientInfo}): React.FC<RegisterEmailFormProps> {
+
+    const [email, setEmail] = useState<string>("");
 
     useEffect(() => {
-        setIsNextAvailable(false);
-    }, []);
+        setClientInfo((prev: ClientToRegister) => ({...prev, email}));
+    }, [email]);
 
-    const handleEmailChange = (e) => {
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.value.length > 0 && IsValidEmail(e.target.value)) {
+            setEmail(e.target.value);
             setIsNextAvailable(true);
         } else {
             setIsNextAvailable(false);

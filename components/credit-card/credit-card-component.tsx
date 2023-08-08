@@ -1,4 +1,5 @@
 import './credit-card.css';
+import { Input } from 'antd';
 
 import React, { useState, useRef } from 'react';
 import Cards from 'react-credit-cards-2';
@@ -70,8 +71,6 @@ export default function CreditCardComponent() {
         <div>
          <div key="Payment">
         <div className="App-payment">
-          <h1>React Credit Cards</h1>
-          <h4>Beautiful credit cards for your payment forms</h4>
           <Cards
             number={state.number}
             expiry={state.expiry}
@@ -82,24 +81,24 @@ export default function CreditCardComponent() {
           />
           <form ref={formRef} onSubmit={handleSubmit}>
             <div className="form-group">
-              <input
+              <Input
                 type="tel"
                 name="number"
                 className="form-control"
-                placeholder="Card Number"
+                placeholder="Numero de Tarjeta"
                 pattern="[\d| ]{16,22}"
                 required
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
               />
-              <small>E.g.: 49..., 51..., 36..., 37...</small>
+              <small>Ej.: 49..., 51..., 36..., 37...</small>
             </div>
             <div className="form-group">
-              <input
+              <Input
                 type="text"
                 name="name"
                 className="form-control"
-                placeholder="Name"
+                placeholder="Nombre"
                 required
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
@@ -107,11 +106,11 @@ export default function CreditCardComponent() {
             </div>
             <div className="row">
               <div className="col-6">
-                <input
+                <Input
                   type="tel"
                   name="expiry"
                   className="form-control"
-                  placeholder="Valid Thru"
+                  placeholder="Fecha Expiracion"
                   pattern="\d\d/\d\d"
                   required
                   onChange={handleInputChange}
@@ -119,7 +118,7 @@ export default function CreditCardComponent() {
                 />
               </div>
               <div className="col-6">
-                <input
+                <Input
                   type="tel"
                   name="cvc"
                   className="form-control"

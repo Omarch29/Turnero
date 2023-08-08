@@ -6,10 +6,17 @@ import { useState } from "react";
 import RegisterShopForm from "./register-shop-form";
 import RegisterPaymentForm from "./register-payment-form";
 import RegisterDone from "./register-done-form";
+import { ClientToRegister } from "@/models/client";
 
 export default function RegisterForm() {
-   const [currentStep, setCurrentStep] = useState(0);
-   const [isNextAvailable, setIsNextAvailable] = useState(true);
+  const [clientInfo, setClientInfo] = useState<ClientToRegister>({
+    nombre_completo: '',
+    shopName: '',
+    descripcion: '',
+    email: ''
+  });
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isNextAvailable, setIsNextAvailable] = useState(true);
   const [items, setItems] = useState([
     {
       title: 'Email',
@@ -41,6 +48,7 @@ export default function RegisterForm() {
         }));
         setItems(updatedItems);
         setCurrentStep(currentStep + 1);
+        setIsNextAvailable(false);
       }
    };
    
@@ -60,9 +68,9 @@ export default function RegisterForm() {
             <Steps
               items={items}
             />
-        {currentStep==0 && <RegisterEmailForm setIsNextAvailable={setIsNextAvailable} />}
-        {currentStep==1 && <RegisterShopForm/>}
-        {currentStep==2 && <RegisterPaymentForm/>}
+        {currentStep==0 && <RegisterEmailForm setIsNextAvailable={setIsNextAvailable} setClientInfo={setClientInfo} />}
+        {currentStep==1 && <RegisterShopForm setIsNextAvailable={setIsNextAvailable} setClientInfo={setClientInfo} />}
+        {currentStep==2 && <RegisterPaymentForm setIsNextAvailable={setIsNextAvailable} />}
         {currentStep==3 && <RegisterDone/>}
         {currentStep!=0 &&<Button icon={<ArrowLeftOutlined />} type="primary" onClick={ handlePrevious} >Anterior</Button>}
         {currentStep!=3 &&<Button icon={<ArrowRightOutlined />} disabled={!isNextAvailable} type="primary" onClick={ handleNext}>Siguiente</Button>}
