@@ -7,7 +7,7 @@ import { useState } from "react";
 
 
 
-export default function RegisterShopForm({setIsNextAvailable, setClientInfo}) {
+export default function RegisterShopForm({setIsNextAvailable, setClientInfo, clientInfo}) {
     const { TextArea } = Input;
     const [shopName, setShopName] = useState<string>("");
     const [IsValidShopName, setIsValidShopName] = useState<boolean>(false);
@@ -37,15 +37,19 @@ export default function RegisterShopForm({setIsNextAvailable, setClientInfo}) {
                 <h4>Nombre que se mostrara de su negocio en la URL</h4>
                 <p>No se puede ingresar espacios o caracteres especiales</p>
                 <Input size="large" 
+                value={clientInfo?.shopName}
                 placeholder="NombreDeNegocio" 
                 addonBefore="http://turnero.com.ar/" 
                 onChange={handleShopChange}
                 status={IsValidShopName ? "" : "error"}
                 />
                 <h4>Url de su logo</h4>
-                <Input size="large" placeholder="large size" prefix={<ShopOutlined />} />
+                <Input 
+                value={clientInfo?.logoUrl}
+                size="large" placeholder="large size" prefix={<ShopOutlined />} />
                 <h4>Descripcion de su negocio</h4>
                 <TextArea
+                    value={clientInfo?.descripcion}
                     placeholder="Describa su negocio en 3 lineas"
                     autoSize={{ minRows: 3, maxRows: 5 }}
                 />

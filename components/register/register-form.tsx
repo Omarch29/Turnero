@@ -68,10 +68,10 @@ export default function RegisterForm() {
             <Steps
               items={items}
             />
-        {currentStep==0 && <RegisterEmailForm setIsNextAvailable={setIsNextAvailable} setClientInfo={setClientInfo} />}
-        {currentStep==1 && <RegisterShopForm setIsNextAvailable={setIsNextAvailable} setClientInfo={setClientInfo} />}
-        {currentStep==2 && <RegisterPaymentForm setIsNextAvailable={setIsNextAvailable} />}
-        {currentStep==3 && <RegisterDone/>}
+        {currentStep==0 && <RegisterEmailForm setIsNextAvailable={setIsNextAvailable} clientInfo={clientInfo}  setClientInfo={setClientInfo} />}
+        {currentStep==1 && <RegisterShopForm setIsNextAvailable={setIsNextAvailable} clientInfo={clientInfo} setClientInfo={setClientInfo} />}
+        {currentStep==2 && <RegisterPaymentForm setIsNextAvailable={setIsNextAvailable} clientInfo={clientInfo} />}
+        {currentStep==3 && <RegisterDone clientInfo={clientInfo}/>}
         {currentStep!=0 &&<Button icon={<ArrowLeftOutlined />} type="primary" onClick={ handlePrevious} >Anterior</Button>}
         {currentStep!=3 &&<Button icon={<ArrowRightOutlined />} disabled={!isNextAvailable} type="primary" onClick={ handleNext}>Siguiente</Button>}
         </Card>

@@ -10,9 +10,10 @@ import { ClientToRegister } from "@/models/client";
 type RegisterEmailFormProps = {
     setIsNextAvailable: (isNextAvailable: boolean) => void;
     setClientInfo: (clientInfo: any) => void;
+    clientInfo: ClientToRegister;
 };
 
-export default function RegisterEmailForm({setIsNextAvailable, setClientInfo}): React.FC<RegisterEmailFormProps> {
+export default function RegisterEmailForm({setIsNextAvailable, setClientInfo, clientInfo}): React.FC<RegisterEmailFormProps> {
 
     const [email, setEmail] = useState<string>("");
 
@@ -39,6 +40,7 @@ export default function RegisterEmailForm({setIsNextAvailable, setClientInfo}): 
             <Col span={12}>
                 <h2>Ingrese su email</h2>
                 <Input 
+                    value={clientInfo?.email}
                     size="large" 
                     placeholder="large size" 
                     prefix={<UserOutlined />}

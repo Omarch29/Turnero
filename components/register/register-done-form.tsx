@@ -4,7 +4,7 @@ import { Col, Row, Input, Divider } from "antd";
 import { CheckCircleFilled } from '@ant-design/icons';
 
 
-export default function RegisterDone() {
+export default function RegisterDone({clientInfo}) {
     return (
         <Row>
             <Col span={6}><CheckCircleFilled style={{fontSize: '100px', color: '#00aa00'}} /></Col>

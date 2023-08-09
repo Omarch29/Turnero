@@ -3,5 +3,6 @@ export interface ClientToRegister {
     shopName: string;
     descripcion: string;
     email: string;
+    logoUrl: string;
     
 }
