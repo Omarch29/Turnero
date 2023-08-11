@@ -41,8 +41,7 @@ export default function RegisterEmailForm({setIsNextAvailable, setClientInfo, cl
             <Col span={6}><Image src={undraw_summer_1wi4} style={{maxWidth: '400px', height: 'auto'}} alt="add email"/></Col>
             <Col span={12}>
                 <h2>Ingrese su email</h2>
-                <Form
-                >
+                <Form>
                     <Form.Item
                         label="Email"
                         name="email"

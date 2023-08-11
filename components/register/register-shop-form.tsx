@@ -1,33 +1,54 @@
 "use client";
 import details from "../../public/undraw_profile_details_re_ch9r.svg";
 import Image from "next/image";
-import { Col, Row, Input, Divider } from "antd";
+import { Col, Row, Input, Divider, Form } from "antd";
 import { ShopOutlined } from '@ant-design/icons';
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ClientToRegister } from "@/models/client";
 
 
 
 export default function RegisterShopForm({setIsNextAvailable, setClientInfo, clientInfo}) {
     const { TextArea } = Input;
     const [shopName, setShopName] = useState<string>("");
-    const [IsValidShopName, setIsValidShopName] = useState<boolean>(false);
-    
+    const validShopNamePattern: RegExp = new RegExp("^[a-zA-Z0-9_]*$");
+    const [form] = Form.useForm();
+
+    useEffect(() => {
+        setClientInfo((prev: ClientToRegister) => ({...prev, shopName}));
+        if (shopName.length > 0 && CheckValidShopName(shopName)) {
+            setIsNextAvailable(true);
+        } else {
+            setIsNextAvailable(false);
+        }
+    }, [shopName]);
+
+    useEffect(() => {
+        
+        return () => {
+
+            const { descripcion, logoUrl } = form.getFieldsValue();
+            setClientInfo((prev: ClientToRegister) => ({...prev, descripcion, logoUrl}));
+
+        };
+    }, []);
+
+    const CheckValidShopName = (shopName: string) => {
+        if (shopName.length < 4) {
+            return false;
+        }
+        return validShopNamePattern.test(shopName);
+    }
+
     const handleShopChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setIsValidShopName(CheckValidShopName(e.target.value));
-        setIsNextAvailable(IsValidShopName);
-        if (e.target.value.length > 0 && IsValidShopName) {
+       
+        if (e.target.value.length > 0 && CheckValidShopName(e.target.value)) {
             setShopName(e.target.value);
         } else {
             setShopName("");
         }
     };
 
-    const CheckValidShopName = (shopName: string) => {
-        if (shopName.length < 4) {
-            return false;
-        }
-        return /^[a-zA-Z0-9_]*$/.test(shopName);
-    }
 
     return (
         <Row>
@@ -36,24 +57,37 @@ export default function RegisterShopForm({setIsNextAvailable, setClientInfo, cli
                 <h2>Ingrese la informacion de su Negocio</h2>
                 <h4>Nombre que se mostrara de su negocio en la URL</h4>
                 <p>No se puede ingresar espacios o caracteres especiales</p>
-                <Input size="large" 
-                value={clientInfo?.shopName}
-                placeholder="NombreDeNegocio" 
-                addonBefore="http://turnero.com.ar/" 
-                onChange={handleShopChange}
-                status={IsValidShopName ? "" : "error"}
-                />
-                <h4>Url de su logo</h4>
-                <Input 
-                value={clientInfo?.logoUrl}
-                size="large" placeholder="large size" prefix={<ShopOutlined />} />
-                <h4>Descripcion de su negocio</h4>
-                <TextArea
-                    value={clientInfo?.descripcion}
-                    placeholder="Describa su negocio en 3 lineas"
-                    autoSize={{ minRows: 3, maxRows: 5 }}
-                />
-              
+                <Form form={form}>
+                    <Form.Item
+                        initialValue={clientInfo?.shopName}
+                        rules={[{ required: true, message: 'Ingrese un nombre de negocio valido', pattern: validShopNamePattern }]}
+                        name="shopName"
+                        >
+                        <Input size="large" 
+                        placeholder="NombreDeNegocio" 
+                        addonBefore="http://turnero.com.ar/" 
+                        onChange={handleShopChange}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                     name="logoUrl"
+                     initialValue={clientInfo?.logoUrl}
+                     >
+                        <h4>Url de su logo</h4>
+                        <Input 
+                        size="large" placeholder="large size" prefix={<ShopOutlined />} />
+                    </Form.Item>
+                    <Form.Item
+                        name="descripcion"
+                        initialValue={clientInfo?.descripcion}
+                    >
+                        <h4>Descripcion de su negocio</h4>
+                        <TextArea
+                            placeholder="Describa su negocio en 3 lineas"
+                            autoSize={{ minRows: 3, maxRows: 5 }}
+                        />
+                    </Form.Item>
+                </Form>
             </Col>
             <Col span={6}><Image src={details} style={{maxWidth: '400px', height: 'auto'}} alt="add email"/></Col>
         </Row>
